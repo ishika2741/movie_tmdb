@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movies Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Top Rated Movies</h1>
+    <div class="container">
+        {% for movie in movies %}
+            <div class="card">
+                <div class="card-content">
+                    <h2>{{ movie.title }}</h2>
+                    <p>Year: {{ movie.year }}</p>
+                    <p>Genre: {{ movie.genre }}</p>
+                    <div class="rating-container" data-movie-id="{{ movie.id }}">
+                        {% for i in range(1, 11) %}
+                            <span class="star" data-rating="{{ i }}"></span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <script>
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', () => {
+                const rating = star.getAttribute('data-rating');
+                const movieId = star.parentElement.getAttribute('data-movie-id');
+                
+                // Toggle the 'selected' class on the clicked star
+                star.classList.toggle('selected');
+                
+                // Send a request to update the rating in the database (you'll need to implement this part)
+                // For demonstration purposes, we'll just log the movie ID and rating to the console.
+                console.log(`Movie ID: ${movieId}, Rating: ${rating}`);
+            });
+        });
+    </script>
+
+    
+</body>
+</html>
